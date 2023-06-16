@@ -1,0 +1,3 @@
+- working on reading the json files
+- get token price
+- create pools/{address} page
