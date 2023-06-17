@@ -26,13 +26,13 @@ export function Table<TData, TValue>({
   const router = useRouter();
 
   const handleRowClick = (row: Row<TData>) => {
-    router.push(`/pools/${row.original.address}`);
+    const address: `0x${string}` = row.getValue("address");
+    router.push(`/pool/${address}`);
   };
 
   return (
     <div className="overflow-x-auto">
       <table className="table">
-        {/* head */}
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -58,6 +58,7 @@ export function Table<TData, TValue>({
                 onClick={() => handleRowClick(row)}
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="hover"
               >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>

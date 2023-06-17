@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { useBalance } from "wagmi";
+import useTokenPrice from "@/hooks/useTokenPrice";
 
 export type Pool = {
   symbol: string;
@@ -13,10 +14,17 @@ export type Pool = {
 export const Balance = ({ address }: { address: `0x${string}` }) => {
   const { data } = useBalance({ address });
   return (
-    <div className="font-medium text-right">
+    <div>
       {data?.formatted} {data?.symbol}
     </div>
   );
+};
+
+const TokenPrice = ({ address }: { address: `0x${string}` }) => {
+  const { data } = useBalance({ address });
+  const symbol = data?.symbol || "";
+  const usdPrice = useTokenPrice(symbol.toLowerCase());
+  return <div>${usdPrice}</div>;
 };
 
 export const columns: ColumnDef<Pool>[] = [
@@ -29,14 +37,26 @@ export const columns: ColumnDef<Pool>[] = [
     header: "Chain ID",
   },
   {
+    accessorKey: "symbol",
+    header: "Symbol",
+  },
+  {
     accessorKey: "tokenPrice",
     header: "Token Price",
+    cell: ({ row }) => {
+      const address: `0x${string}` = row.getValue("address");
+      return (
+        <>
+          <TokenPrice address={address} />
+        </>
+      );
+    },
   },
   {
     accessorKey: "balance",
     header: "Balance",
     cell: ({ row }) => {
-      const address: `0x${string}` = row.original.address;
+      const address: `0x${string}` = row.getValue("address");
       return (
         <>
           <Balance address={address} />

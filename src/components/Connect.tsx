@@ -20,11 +20,13 @@ export function Connect() {
 
         {connectors
           .filter((x) => x.ready && x.id !== connector?.id)
-          .map((x) => (
-            <button key={x.id} onClick={() => connect({ connector: x })}>
-              {x.name}
-              {isLoading && x.id === pendingConnector?.id && " (connecting)"}
-            </button>
+          .map((x, i) => (
+            <div key={i} className="space-x-4">
+              <button key={x.id} onClick={() => connect({ connector: x })}>
+                {x.name} Connect
+                {isLoading && x.id === pendingConnector?.id && " (connecting)"}
+              </button>
+            </div>
           ))}
       </div>
 
