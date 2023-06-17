@@ -6,3 +6,5 @@
 ### /home
 
 - display pool table
+
+### /pool/address
