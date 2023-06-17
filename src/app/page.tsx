@@ -8,7 +8,6 @@ export default async function Home() {
   return (
     <main className="flex-1 p-5">
       <Table columns={columns} data={data} />
-      <Contract />
     </main>
   );
 }
